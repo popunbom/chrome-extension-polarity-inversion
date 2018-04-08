@@ -3,19 +3,19 @@
   "name": "Polarity Inversion",
   "description": "Invert polarity of audio.",
   "version": "1.2",
+  "icons": {
+    "128": "icon128_a.png"
+  },
   "permissions": [
-  	// "experimental",
-  	// "browser",
   	"background",
   	"activeTab",
-  	// "runtime",
   	"tabs"
   ],
   "background": { 
   	"scripts": ["background.js"] 
   },
   "browser_action": {
-      "name": "Click to change the icon's color"
+      "name": "Polarity Inversion"
   },
   "content_scripts": [{
       "matches": ["<all_urls>"],

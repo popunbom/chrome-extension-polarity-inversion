@@ -29,14 +29,18 @@ function switchEffect(){
 		effectOut.disconnect(audioCtx.destination);
 		// Re-Connect
 		source.connect(audioCtx.destination);
-		console.log("PolarityInversion: Disabled");
+		chrome.runtime.sendMessage({text: 'disabled'}, function(){
+			console.log("PolarityInversion: Disabled");
+		});
 	} else {
 		// Disconnect
 		source.disconnect(audioCtx.destination);
 		// Re-Connect
 		source.connect(effectIn);
 		effectOut.connect(audioCtx.destination);
-		console.log("PolarityInversion: Enabled");
+		chrome.runtime.sendMessage({text: 'enabled'}, function(){
+			console.log("PolarityInversion: Enabled");
+		});
 	}
 	isInverted = !isInverted
 }
@@ -47,6 +51,12 @@ window.onload = function() {
 	source = audioCtx.createMediaElementSource(document.querySelector('video'));
 	if (source == null){
 		source = audioCtx.createMediaElementSource(document.querySelector('audio'));	
+	}
+
+	if (source == null){
+		chrome.runtime.sendMessage({text: 'not_available'}, function(){});
+	} else {
+		chrome.runtime.sendMessage({text: 'disabled'}, function(){});
 	}
 	initEffect();
 	source.connect(audioCtx.destination);
@@ -60,3 +70,5 @@ chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
 	 	switchEffect();
  	}
 });
+
+
