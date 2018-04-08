@@ -9,6 +9,7 @@
   "permissions": [
   	"background",
   	"activeTab",
+    "webNavigation",
   	"tabs"
   ],
   "background": { 
