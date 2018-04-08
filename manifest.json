@@ -1,0 +1,24 @@
+{
+  "manifest_version": 2,
+  "name": "Polarity Inversion",
+  "description": "Invert polarity of audio.",
+  "version": "1.2",
+  "permissions": [
+  	// "experimental",
+  	// "browser",
+  	"background",
+  	"activeTab",
+  	// "runtime",
+  	"tabs"
+  ],
+  "background": { 
+  	"scripts": ["background.js"] 
+  },
+  "browser_action": {
+      "name": "Click to change the icon's color"
+  },
+  "content_scripts": [{
+      "matches": ["<all_urls>"],
+      "js": ["content.js"]
+  }]
+}
