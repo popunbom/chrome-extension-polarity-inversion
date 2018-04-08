@@ -48,16 +48,14 @@ function switchEffect(){
 // Execute init AFTER html loaded.
 window.onload = function() {
 	// Get MediaElement ( ex. <video>, <audio> )
-	source = audioCtx.createMediaElementSource(document.querySelector('video'));
-	if (source == null){
-		source = audioCtx.createMediaElementSource(document.querySelector('audio'));	
-	}
-
-	if (source == null){
+	var elems = document.querySelector('video') || document.querySelector('audio');
+	if (elems == null){
 		chrome.runtime.sendMessage({text: 'not_available'}, function(){});
 	} else {
+		source = audioCtx.createMediaElementSource(elems);		
 		chrome.runtime.sendMessage({text: 'disabled'}, function(){});
 	}
+
 	initEffect();
 	source.connect(audioCtx.destination);
 }
