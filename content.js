@@ -4,21 +4,30 @@ var	effectIn  = audioCtx.createChannelSplitter(2);
 var	effectOut = audioCtx.createChannelMerger(2);
 var	isInverted = false;
 
-// This is Contents Script
-function init(){
-	// Get MediaElement ( ex. <video>, <audio> )
+function getAudioSrc() {
 	var elems = document.querySelector('video') || document.querySelector('audio');
 	if (elems == null){
 		chrome.runtime.sendMessage({text: 'not_available'}, function(){});
+		return false;
 	} else {
 		source = audioCtx.createMediaElementSource(elems);		
 		chrome.runtime.sendMessage({text: 'disabled'}, function(){});
+		return true;
 	}
+}
 
-	initEffect();
-	source.connect(audioCtx.destination);
-	if (isInverted){
-		switchEffect();
+// This is Contents Script
+function init(){
+	// Get Audio Resource
+	if (source == null) {
+		var flag = getAudioSrc();
+	}
+	if (flag){
+		initEffect();
+		source.connect(audioCtx.destination);
+		if (isInverted){
+			switchEffect();
+		}
 	}
 }
 
